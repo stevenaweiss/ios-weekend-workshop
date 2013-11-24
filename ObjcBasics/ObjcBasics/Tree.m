@@ -10,7 +10,8 @@
 
 @implementation Tree
 
-- (id)initWithSpecies:(NSString *)species age:(int)age
+- (id)initWithSpecies:(NSString *)species
+                  age:(int)age
 {
     self = [super init];
     if (self) {

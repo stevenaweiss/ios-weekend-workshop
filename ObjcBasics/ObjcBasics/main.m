@@ -73,7 +73,9 @@ int main(int argc, char * argv[])
         // Exmaple 5
         
         Tree *pineTree = [[Tree alloc] initWithSpecies:@"Pine" age:3];
+        
         Tree *dogwoodTree = [[Tree alloc] initWithSpecies:@"Dogwood" age:35];
+        
         Tree *japaneseMapleTree = [[Tree alloc] initWithSpecies:@"Japanese Maple" age:41];
         
         [pineTree printInfo];
@@ -81,6 +83,15 @@ int main(int argc, char * argv[])
         [japaneseMapleTree printInfo];
         
         NSLog(@"Species: %@, Age: %i", dogwoodTree.species, dogwoodTree.age);
+        
+        dogwoodTree.species = @"some new species";
+        dogwoodTree.age = 48;
+        
+        NSLog(@"species: %@", [dogwoodTree species]);
+        
+        [dogwoodTree setSpecies:@"some new species"];
+        [dogwoodTree setAge:48];
+        
         
 //        UIApplicationMain(argc, argv, nil, NSStringFromClass([AppDelegate class]));
     }

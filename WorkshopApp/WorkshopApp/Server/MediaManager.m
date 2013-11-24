@@ -25,13 +25,12 @@
     NSString * endpoint = [NSString stringWithFormat:@"%@%@", POPULAR_MEDIA_ENDPOINT, INSTAGRAM_CLIENT_ID];
     
     NSURL *URL = [NSURL URLWithString:endpoint];
-    NSURLRequest *request = [NSURLRequest requestWithURL:URL];
     
     // Use an NSURLSessionDataTask to asynchronously fetch JSON from Instagram's "popular media" endpoint
     
     __weak MediaManager * weakSelf = self;
     NSURLSession *session = [NSURLSession sharedSession];
-    NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+    NSURLSessionDataTask *task = [session dataTaskWithURL:URL completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         
         // Check for errors related to the request and response
         // Call the requisite delegate methods
