@@ -21,67 +21,36 @@
 
 - (void)fetchPopularMediaWithCompletionBlock:(void (^)(NSArray *media, NSError *error))completionBlock
 {
-    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
-        [self postiOS7PopularMediaWithCompletionBlock:completionBlock];
-    } else {
-        [self preiOS7PopularMediaWithCompletionBlock:completionBlock];
-    }
-}
-
-- (void)preiOS7PopularMediaWithCompletionBlock:(void (^)(NSArray *media, NSError *error))completionBlock
-{
-    __weak MediaManager *weakSelf = self;
-    NSURLRequest *request = [NSURLRequest requestWithURL:INSTAGRAM_URL];
-    NSOperationQueue *queue = [[NSOperationQueue alloc] init];
-    [NSURLConnection sendAsynchronousRequest:request queue:queue completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
-        [weakSelf handleData:data response:response error:error completionBlock:completionBlock];
-    }];
-}
-
-- (void)postiOS7PopularMediaWithCompletionBlock:(void (^)(NSArray *media, NSError *error))completionBlock
-{
     __weak MediaManager * weakSelf = self;
     NSURLSession *session = [NSURLSession sharedSession];
     NSURLSessionDataTask *task = [session dataTaskWithURL:INSTAGRAM_URL completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        [weakSelf handleData:data response:response error:error completionBlock:completionBlock];
-    }];
-    [task resume];
-}
-
-- (void)handleData:(NSData *)data
-          response:(NSURLResponse *)response
-             error:(NSError *)error
-   completionBlock:(void (^)(NSArray *media, NSError *error))completionBlock
-{
-    // Check for errors related to the request and response
-    // Call the requisite delegate methods
-    
-    if (error) {
-        completionBlock(nil, error);
-    } else {
-        
-        NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data
-                                                                   options:NSJSONReadingAllowFragments
-                                                                     error:&error];
-        if (error){
+        if (error) {
             completionBlock(nil, error);
         } else {
-            NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-            if (httpResponse.statusCode == 200) {
-                NSArray *media = [self mediaFromResponse:dictionary];
-                completionBlock(media, nil);
-            } else {
-                error = [NSError errorFromResponse:dictionary];
+            
+            NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data
+                                                                       options:NSJSONReadingAllowFragments
+                                                                         error:&error];
+            if (error){
                 completionBlock(nil, error);
+            } else {
+                NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+                if (httpResponse.statusCode == 200) {
+                    NSArray *media = [weakSelf mediaFromResponse:dictionary];
+                    completionBlock(media, nil);
+                } else {
+                    error = [NSError errorFromResponse:dictionary];
+                    completionBlock(nil, error);
+                }
             }
         }
-    }
+    }];
+    [task resume];
 }
 
 - (void)downloadImage:(NSURL *)imageURL withCompletionBlock:(void (^)(NSURL *location, NSError *error))completionBlock
 {
     // Use an NSURLSessionDownloadTask to asynchronously fetch the image
-    // TODO: provide a pre-iOS7 alternative
     
     NSURLSession *session = [NSURLSession sharedSession];
     NSURLSessionDownloadTask *getImageTask = [session downloadTaskWithURL:imageURL completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error) {

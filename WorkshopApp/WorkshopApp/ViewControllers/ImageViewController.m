@@ -38,9 +38,7 @@
     
     self.title = self.mediaObject.username;
     
-    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
-        self.edgesForExtendedLayout = UIRectEdgeNone; // Ensure that our UI elements begin just after the navigationBar rather than beneath it
-    }
+    self.edgesForExtendedLayout = UIRectEdgeNone; // Ensure that our UI elements begin just after the navigationBar rather than beneath it
     
     self.captionLabel.text = self.mediaObject.caption;
     [self.captionLabel sizeToFit];
