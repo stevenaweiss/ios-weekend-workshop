@@ -9,90 +9,10 @@
 #import <UIKit/UIKit.h>
 
 #import "AppDelegate.h"
-#import "Tree.h"
 
 int main(int argc, char * argv[])
 {
-    @autoreleasepool {
- 
-        // Example 1
-        
-        NSString *name = @"Alfie";
-        int age = 34;
-        float height = 6 + 4.0f/12;
-        
-        NSLog(@"My name is %@. I am %i years old. I am %.2f feet tall.", name, age, height);
-        
-        
-        // Example 2
-        
-        BOOL hasPrettyLongName = NO;
-        
-        if ([name length] > 10) {
-            hasPrettyLongName = YES;
-        } else {
-            hasPrettyLongName = NO;
-        }
-        
-        NSLog(@"Is my name pretty long? %i (%i characters)", hasPrettyLongName, [name length]);
-
-        
-        // Example 3
-        
-        NSArray *numbers = @[@10, @20, @25, @100];
-        
-        float sum = 0.0f;
-        
-        for (int i = 0; i < [numbers count]; i++) {
-            NSNumber *number = numbers[i];
-            sum = sum + [number intValue];
-        }
-        
-        float average = sum / [numbers count]; // Should be 38.75
-        
-        NSLog(@"average = %.2f", average);
-        
-        
-        // Example 4
-        
-        NSDictionary *myInfo = @{@"name":@"Alfie",
-                               @"age":@34,
-                               @"height":@6.33};
-
-        NSArray *allKeys = [myInfo allKeys];
-        
-        for (int i = 0; i < [allKeys count]; i++) {
-            
-            NSString *key = [allKeys objectAtIndex:i];
-            id value = [myInfo valueForKey:key];
-            
-            NSLog(@"%@ : %@", key, value);
-        }
-        
-        
-        // Exmaple 5
-        
-        Tree *pineTree = [[Tree alloc] initWithSpecies:@"Pine" age:3];
-        
-        Tree *dogwoodTree = [[Tree alloc] initWithSpecies:@"Dogwood" age:35];
-        
-        Tree *japaneseMapleTree = [[Tree alloc] initWithSpecies:@"Japanese Maple" age:41];
-        
-        [pineTree printInfo];
-        [dogwoodTree printInfo];
-        [japaneseMapleTree printInfo];
-        
-        NSLog(@"Species: %@, Age: %i", dogwoodTree.species, dogwoodTree.age);
-        
-        dogwoodTree.species = @"some new species";
-        dogwoodTree.age = 48;
-        
-        NSLog(@"species: %@", [dogwoodTree species]);
-        
-        [dogwoodTree setSpecies:@"some new species"];
-        [dogwoodTree setAge:48];
-        
-        
-//        UIApplicationMain(argc, argv, nil, NSStringFromClass([AppDelegate class]));
+    @autoreleasepool { 
+        UIApplicationMain(argc, argv, nil, NSStringFromClass([AppDelegate class]));
     }
 }
