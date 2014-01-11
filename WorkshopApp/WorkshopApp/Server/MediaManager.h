@@ -10,6 +10,10 @@
 
 @interface MediaManager : NSObject
 
-- (void)fetchPopularMediaWithCompletionBlock:(void (^)(NSArray *media, NSError *error))completionBlock;
+@property (nonatomic, strong) NSArray *mediaObjects;
+
+- (void)fetchPopularMediaWithCompletionBlock:(void (^)(BOOL success))completionBlock;
+
++ (BOOL)isValidElement:(id)element;
 
 @end

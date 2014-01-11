@@ -28,6 +28,8 @@
     return self;
 }
 
+#pragma mark - View Lifecycle
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -43,6 +45,8 @@
     [self setupImageView];
     [self setupCaption];
 }
+
+#pragma mark - Setup
 
 - (void)setupCaption
 {
@@ -68,12 +72,6 @@
         
     }];
     [getImageTask resume];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 @end

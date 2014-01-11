@@ -12,9 +12,10 @@
 #import "MediaObject.h"
 
 @interface PopularMediaViewController () <UITableViewDataSource, UITableViewDelegate>
+
 @property (nonatomic, strong) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) MediaManager *mediaManager;
-@property (nonatomic, strong) NSArray *mediaObjects;
+
 @end
 
 @implementation PopularMediaViewController
@@ -28,6 +29,8 @@
     return self;
 }
 
+#pragma mark - View Lifecycle
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -36,8 +39,6 @@
     
     self.title = @"Media";
     
-    self.mediaObjects = [NSArray array];
-
     self.mediaManager = [[MediaManager alloc] init];
 
     UIBarButtonItem *refreshButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(didTapRefresh:)];
@@ -46,24 +47,27 @@
     [self updateContent];
 }
 
+#pragma mark - Content 
+
 - (void)updateContent
 {
-    [self.mediaManager fetchPopularMediaWithCompletionBlock:^(NSArray *media, NSError *error) {
+    __weak PopularMediaViewController *weakSelf = self;
+    [self.mediaManager fetchPopularMediaWithCompletionBlock:^(BOOL success) {
 
         dispatch_sync(dispatch_get_main_queue(), ^{
 
-            if (media) {
-                self.mediaObjects = media;
-                [self.tableView reloadData];
-                [self enableRefreshButton:YES];
-            } else if (error) {
-                UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"An Error Occurred"
-                                                                 message:error.localizedDescription
+            [weakSelf enableRefreshButton:YES];
+
+            if (success) {
+                [weakSelf.tableView reloadData];
+            
+            } else {
+                UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Uh Oh!"
+                                                                 message:@"An error occurred"
                                                                 delegate:nil
                                                        cancelButtonTitle:@"Okay"
                                                        otherButtonTitles:nil];
                 [alert show];
-                [self enableRefreshButton:YES];
             }
         });
 
@@ -83,15 +87,6 @@
     self.navigationItem.rightBarButtonItem.enabled = shouldEnable;
 }
 
-#pragma mark - UITableView Delegate
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    ImageViewController *viewController = [[ImageViewController alloc] initWithNibName:@"ImageViewController" bundle:Nil];
-    viewController.mediaObject = [self.mediaObjects objectAtIndex:indexPath.row];
-    [self.navigationController pushViewController:viewController animated:YES];
-}
-
 #pragma mark - UITableView Datasource
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -103,7 +98,7 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
     
-    MediaObject *mediaObject = [self.mediaObjects objectAtIndex:indexPath.row];
+    MediaObject *mediaObject = [self.mediaManager.mediaObjects objectAtIndex:indexPath.row];
     cell.textLabel.text = mediaObject.username;
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
@@ -112,7 +107,16 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [self.mediaObjects count];
+    return [self.mediaManager.mediaObjects count];
+}
+
+#pragma mark - UITableView Delegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    ImageViewController *viewController = [[ImageViewController alloc] initWithNibName:@"ImageViewController" bundle:Nil];
+    viewController.mediaObject = [self.mediaManager.mediaObjects objectAtIndex:indexPath.row];
+    [self.navigationController pushViewController:viewController animated:YES];
 }
 
 @end

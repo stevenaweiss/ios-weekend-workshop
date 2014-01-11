@@ -7,6 +7,7 @@
 //
 
 #import "MediaObject.h"
+#import "MediaManager.h"
 
 @implementation MediaObject
 
@@ -30,10 +31,12 @@
 - (NSString *)parseUsername:(NSDictionary *)dictionary
 {
     NSString * username = @"-";
-    NSDictionary *userDict = [dictionary valueForKey:@"user"];
-    if (userDict && (NSNull *)userDict != [NSNull null]) {
-        NSString * tempUsername = [userDict valueForKey:@"username"];
-        if (tempUsername && (NSNull *)tempUsername != [NSNull null]) {
+    
+    NSDictionary *userDictionary = [dictionary valueForKey:@"user"];
+    if ([MediaManager isValidElement:userDictionary]) {
+    
+        NSString * tempUsername = [userDictionary valueForKey:@"username"];
+        if ([MediaManager isValidElement:tempUsername]) {
             username = tempUsername;
         }
     }
@@ -43,11 +46,13 @@
 - (NSString *)parseCaption:(NSDictionary *)dictionary
 {
     NSString * caption = @"-";
-    NSDictionary *tempCaption = [dictionary valueForKey:@"caption"];
-    if (tempCaption && (NSNull *)tempCaption != [NSNull null]) {
-        NSString * title = [tempCaption valueForKey:@"text"];
-        if (title && (NSNull *)title != [NSNull null]) {
-            caption = title;
+    
+    NSDictionary *captionDictionary = [dictionary valueForKey:@"caption"];
+    if ([MediaManager isValidElement:captionDictionary]) {
+    
+        NSString * tempCaption = [captionDictionary valueForKey:@"text"];
+        if ([MediaManager isValidElement:tempCaption]) {
+            caption = tempCaption;
         }
     }
     return caption;
@@ -55,18 +60,21 @@
 
 - (NSURL *)parseImageURL:(NSDictionary *)dictionary
 {
-    NSString *urlString = @"";
+    NSString *URLString = @"";
+    
     NSDictionary *images = [dictionary valueForKey:@"images"];
-    if (images && (NSNull *)images != [NSNull null]) {
+    if ([MediaManager isValidElement:images]) {
+    
         NSDictionary * imageDictionary = [images valueForKey:@"standard_resolution"];
-        if (imageDictionary && (NSNull *)imageDictionary != [NSNull null]) {
+        if ([MediaManager isValidElement:imageDictionary]) {
+        
             NSString *tempURLString = [imageDictionary valueForKey:@"url"];
-            if (tempURLString && (NSNull *)tempURLString != [NSNull null]) {
-                urlString = tempURLString;
+            if ([MediaManager isValidElement:tempURLString]) {
+                URLString = tempURLString;
             }
         }
     }
-    return [NSURL URLWithString:urlString];
+    return [NSURL URLWithString:URLString];
 }
 
 @end
