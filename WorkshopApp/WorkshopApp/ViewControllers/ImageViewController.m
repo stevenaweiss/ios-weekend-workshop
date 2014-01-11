@@ -8,24 +8,22 @@
 
 #import "ImageViewController.h"
 #import "MediaObject.h"
-#import "MediaManager.h"
 
 @interface ImageViewController ()
-@property (nonatomic, strong) MediaObject *mediaObject;
+
 @property (nonatomic, strong) IBOutlet UIImageView *imageView;
 @property (nonatomic, strong) IBOutlet UILabel *captionLabel;
+@property (nonatomic, strong) IBOutlet UIActivityIndicatorView *activityIndicatorView;
+
 @end
 
 @implementation ImageViewController
 
-// Because an ImageViewController cannot exist without a mediaObject,
-// Define a custom init method that accepts a MediaObject
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil mediaObject:(MediaObject *)mediaObject
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.mediaObject = mediaObject;
+
     }
     return self;
 }
@@ -34,29 +32,42 @@
 {
     [super viewDidLoad];
     
-	// Do any additional setup after loading the view.
+    // Harsh, but for the sake of simplicity we're quitting if mediaObject == nil at this point
+    NSAssert(self.mediaObject != nil, @"self.mediaObject cannot be nil");
     
     self.title = self.mediaObject.username;
     
-    self.edgesForExtendedLayout = UIRectEdgeNone; // Ensure that our UI elements begin just after the navigationBar rather than beneath it
+    // Ensure that our UI elements begin just after the navigationBar rather than beneath it
+    self.edgesForExtendedLayout = UIRectEdgeNone;
     
+    [self setupImageView];
+    [self setupCaption];
+}
+
+- (void)setupCaption
+{
     self.captionLabel.text = self.mediaObject.caption;
     [self.captionLabel sizeToFit];
-    
-    // Init an instance of the MediaManager class,
-    // And use it to download and set the image property of our UIImageView
-    
-    MediaManager *mediaManager = [[MediaManager alloc] init];
+}
 
+- (void)setupImageView
+{
+    [self.activityIndicatorView startAnimating];
+    
+    // Use an NSURLSessionDownloadTask to asynchronously fetch the image
+    
     __weak ImageViewController * weakSelf = self;
-    [mediaManager downloadImage:self.mediaObject.imageURL withCompletionBlock:^(NSURL *location, NSError *error) {
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSURLSessionDownloadTask *getImageTask = [session downloadTaskWithURL:self.mediaObject.imageURL completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error) {
         
         UIImage *downloadedImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:location]];
         dispatch_async(dispatch_get_main_queue(), ^{
+            [weakSelf.activityIndicatorView stopAnimating];
             weakSelf.imageView.image = downloadedImage;
         });
         
     }];
+    [getImageTask resume];
 }
 
 - (void)didReceiveMemoryWarning

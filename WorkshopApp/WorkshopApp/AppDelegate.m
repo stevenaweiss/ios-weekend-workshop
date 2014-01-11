@@ -17,9 +17,12 @@
     
     // Override point for customization after application launch.
     
-    PopularMediaViewController *vc = [[PopularMediaViewController alloc] initWithNibName:@"PopularMediaViewController" bundle:nil];
-    UINavigationController *nc = [[UINavigationController alloc] initWithRootViewController:vc];
-    [self.window setRootViewController:nc];
+    // Create an instance of PopularMediaViewController
+    PopularMediaViewController *viewController = [[PopularMediaViewController alloc] initWithNibName:@"PopularMediaViewController" bundle:nil];
+    
+    // Create a UINavigationController so we have forward/backward navigation capability    
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
+    [self.window setRootViewController:navigationController];
     
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];

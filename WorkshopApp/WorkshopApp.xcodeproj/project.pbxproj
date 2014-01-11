@@ -20,7 +20,6 @@
 		918FC3161836C285009C0FA4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 918FC3141836C285009C0FA4 /* InfoPlist.strings */; };
 		918FC3181836C285009C0FA4 /* WorkshopAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 918FC3171836C285009C0FA4 /* WorkshopAppTests.m */; };
 		918FC3341836C2A9009C0FA4 /* NSError+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 918FC3231836C2A9009C0FA4 /* NSError+Extensions.m */; };
-		918FC3351836C2A9009C0FA4 /* PopularMediaCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 918FC3261836C2A9009C0FA4 /* PopularMediaCell.m */; };
 		918FC3361836C2A9009C0FA4 /* MediaObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 918FC3291836C2A9009C0FA4 /* MediaObject.m */; };
 		918FC3371836C2A9009C0FA4 /* MediaManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 918FC32C1836C2A9009C0FA4 /* MediaManager.m */; };
 		918FC3381836C2A9009C0FA4 /* ImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 918FC32F1836C2A9009C0FA4 /* ImageViewController.m */; };
@@ -58,8 +57,6 @@
 		918FC3171836C285009C0FA4 /* WorkshopAppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WorkshopAppTests.m; sourceTree = "<group>"; };
 		918FC3221836C2A9009C0FA4 /* NSError+Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSError+Extensions.h"; sourceTree = "<group>"; };
 		918FC3231836C2A9009C0FA4 /* NSError+Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSError+Extensions.m"; sourceTree = "<group>"; };
-		918FC3251836C2A9009C0FA4 /* PopularMediaCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PopularMediaCell.h; sourceTree = "<group>"; };
-		918FC3261836C2A9009C0FA4 /* PopularMediaCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PopularMediaCell.m; sourceTree = "<group>"; };
 		918FC3281836C2A9009C0FA4 /* MediaObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaObject.h; sourceTree = "<group>"; };
 		918FC3291836C2A9009C0FA4 /* MediaObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaObject.m; sourceTree = "<group>"; };
 		918FC32B1836C2A9009C0FA4 /* MediaManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaManager.h; sourceTree = "<group>"; };
@@ -132,7 +129,6 @@
 				918FC3011836C285009C0FA4 /* AppDelegate.h */,
 				918FC3021836C285009C0FA4 /* AppDelegate.m */,
 				918FC32D1836C2A9009C0FA4 /* ViewControllers */,
-				918FC3241836C2A9009C0FA4 /* Cells */,
 				918FC32A1836C2A9009C0FA4 /* Server */,
 				918FC3271836C2A9009C0FA4 /* Model */,
 				918FC3211836C2A9009C0FA4 /* Categories */,
@@ -178,15 +174,6 @@
 				918FC3231836C2A9009C0FA4 /* NSError+Extensions.m */,
 			);
 			path = Categories;
-			sourceTree = "<group>";
-		};
-		918FC3241836C2A9009C0FA4 /* Cells */ = {
-			isa = PBXGroup;
-			children = (
-				918FC3251836C2A9009C0FA4 /* PopularMediaCell.h */,
-				918FC3261836C2A9009C0FA4 /* PopularMediaCell.m */,
-			);
-			path = Cells;
 			sourceTree = "<group>";
 		};
 		918FC3271836C2A9009C0FA4 /* Model */ = {
@@ -319,7 +306,6 @@
 			files = (
 				918FC3371836C2A9009C0FA4 /* MediaManager.m in Sources */,
 				918FC33A1836C2A9009C0FA4 /* PopularMediaViewController.m in Sources */,
-				918FC3351836C2A9009C0FA4 /* PopularMediaCell.m in Sources */,
 				918FC3341836C2A9009C0FA4 /* NSError+Extensions.m in Sources */,
 				918FC3031836C285009C0FA4 /* AppDelegate.m in Sources */,
 				918FC3361836C2A9009C0FA4 /* MediaObject.m in Sources */,

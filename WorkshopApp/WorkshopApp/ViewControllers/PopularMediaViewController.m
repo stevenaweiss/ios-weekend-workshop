@@ -7,7 +7,6 @@
 //
 
 #import "PopularMediaViewController.h"
-#import "PopularMediaCell.h"
 #import "ImageViewController.h"
 #import "MediaManager.h"
 #import "MediaObject.h"
@@ -56,7 +55,7 @@
             if (media) {
                 self.mediaObjects = media;
                 [self.tableView reloadData];
-                self.navigationItem.rightBarButtonItem.enabled = YES;
+                [self enableRefreshButton:YES];
             } else if (error) {
                 UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"An Error Occurred"
                                                                  message:error.localizedDescription
@@ -64,7 +63,7 @@
                                                        cancelButtonTitle:@"Okay"
                                                        otherButtonTitles:nil];
                 [alert show];
-                self.navigationItem.rightBarButtonItem.enabled = YES;
+                [self enableRefreshButton:YES];
             }
         });
 
@@ -75,17 +74,22 @@
 
 - (void)didTapRefresh:(UIBarButtonItem *)sender
 {
-    sender.enabled = NO;
+    [self enableRefreshButton:NO];
     [self updateContent];
+}
+
+- (void)enableRefreshButton:(BOOL)shouldEnable
+{
+    self.navigationItem.rightBarButtonItem.enabled = shouldEnable;
 }
 
 #pragma mark - UITableView Delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    MediaObject *mediaObject = [self.mediaObjects objectAtIndex:indexPath.row];
-    ImageViewController *vc = [[ImageViewController alloc] initWithNibName:@"ImageViewController" bundle:Nil mediaObject:mediaObject];
-    [self.navigationController pushViewController:vc animated:YES];
+    ImageViewController *viewController = [[ImageViewController alloc] initWithNibName:@"ImageViewController" bundle:Nil];
+    viewController.mediaObject = [self.mediaObjects objectAtIndex:indexPath.row];
+    [self.navigationController pushViewController:viewController animated:YES];
 }
 
 #pragma mark - UITableView Datasource
@@ -94,24 +98,21 @@
 {
     static NSString *cellIdentifier = @"Cell";
     
-    PopularMediaCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (!cell) {
-        cell = [[PopularMediaCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
     
     MediaObject *mediaObject = [self.mediaObjects objectAtIndex:indexPath.row];
-    [cell setMediaObject:mediaObject];
+    cell.textLabel.text = mediaObject.username;
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
     return cell;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (section == 0) {
-        return [self.mediaObjects count];
-    } else {
-        return 0;
-    }
+    return [self.mediaObjects count];
 }
 
 @end

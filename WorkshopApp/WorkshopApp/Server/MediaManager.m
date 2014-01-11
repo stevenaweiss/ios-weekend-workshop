@@ -48,21 +48,6 @@
     [task resume];
 }
 
-- (void)downloadImage:(NSURL *)imageURL withCompletionBlock:(void (^)(NSURL *location, NSError *error))completionBlock
-{
-    // Use an NSURLSessionDownloadTask to asynchronously fetch the image
-    
-    NSURLSession *session = [NSURLSession sharedSession];
-    NSURLSessionDownloadTask *getImageTask = [session downloadTaskWithURL:imageURL completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error) {
-        if (error) {
-            completionBlock(nil, error);
-        } else if (location) {
-            completionBlock(location, nil);
-        }
-    }];
-    [getImageTask resume];
-}
-
 #pragma mark - Utilities
 
 - (NSArray *)mediaFromResponse:(NSDictionary *)response
