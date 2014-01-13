@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+// Public interface
+
 @interface Tree : NSObject
 
 @property (nonatomic, strong) NSString *species;
@@ -15,6 +17,8 @@
 
 - (id)initWithSpecies:(NSString *)species age:(int)age;
 
-- (void)printInfo;
+- (void)printDescription;
+
+- (void)descriptionWithBlock:(void(^)(NSString *description))block;
 
 @end

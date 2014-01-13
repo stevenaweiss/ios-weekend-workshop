@@ -16,7 +16,8 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
     // Override point for customization after application launch.
-    [self runExercises];
+    
+    [self runExamples];
     
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
@@ -25,16 +26,18 @@
 
 #pragma mark - Exercises
 
-- (void)runExercises
+- (void)runExamples
 {
-    [self firstExercise];
-    [self secondExercise];
-    [self thirdExercise];
-    [self fourthExercise];
-    [self fifthExercise];
+    [self firstExample];
+    [self secondExample];
+    [self thirdExample];
+    [self fourthExample];
+    [self fifthExample];
+    [self sixthExample];
+    [self seventhExample];
 }
 
-- (void)firstExercise
+- (void)firstExample // Datatypes, variables, logging
 {
     NSString *name = @"Alfie";
     int age = 34;
@@ -43,7 +46,7 @@
     NSLog(@"My name is %@. I am %i years old. I am %.2f feet tall.", name, age, height);
 }
 
-- (void)secondExercise
+- (void)secondExample // Conditionals, sending messages
 {
     NSString *name = @"Alfie";
     BOOL hasPrettyLongName = NO;
@@ -57,7 +60,7 @@
     NSLog(@"Is my name pretty long? %i (%i characters)", hasPrettyLongName, [name length]);
 }
 
-- (void)thirdExercise
+- (void)thirdExample // For loops, arrays
 {
     NSArray *numbers = @[@10, @20, @25, @100];
     
@@ -73,44 +76,53 @@
     NSLog(@"average = %.2f", average);
 }
 
-- (void)fourthExercise
+- (void)fourthExample // Dictionaries
 {
-    NSDictionary *myInfo = @{@"name":@"Alfie",
-                             @"age":@34,
-                             @"height":@6.33};
+    NSDictionary *myInfo = @{@"name" : @"Alfie",
+                             @"age" : @34,
+                             @"height" : @6.33};
     
-    NSArray *allKeys = [myInfo allKeys];
+    NSArray *keys = [myInfo allKeys];
+    NSLog(@"keys: %@", keys);
     
-    for (int i = 0; i < [allKeys count]; i++) {
-        
-        NSString *key = [allKeys objectAtIndex:i];
-        id value = [myInfo valueForKey:key];
-        
-        NSLog(@"%@ : %@", key, value);
-    }
+    NSArray *values = [myInfo allValues];
+    NSLog(@"values: %@", values);
+
+    NSLog(@"Name: %@", [myInfo valueForKey:@"name"]);
+    NSLog(@"Age: %i", [[myInfo valueForKey:@"age"] intValue]);
+    NSLog(@"Height: %.2f", [[myInfo valueForKey:@"height"] floatValue]);
 }
 
-- (void)fifthExercise
+- (void)fifthExample // Classes, instances, properties
 {
-    Tree *pineTree = [[Tree alloc] initWithSpecies:@"Pine" age:3];
-    
     Tree *dogwoodTree = [[Tree alloc] initWithSpecies:@"Dogwood" age:35];
-    
     Tree *japaneseMapleTree = [[Tree alloc] initWithSpecies:@"Japanese Maple" age:41];
     
-    [pineTree printInfo];
-    [dogwoodTree printInfo];
-    [japaneseMapleTree printInfo];
-    
+    [dogwoodTree printDescription];
+    [japaneseMapleTree printDescription];
     NSLog(@"Species: %@, Age: %i", dogwoodTree.species, dogwoodTree.age);
     
     dogwoodTree.species = @"some new species";
     dogwoodTree.age = 48;
-    
-    NSLog(@"species: %@", [dogwoodTree species]);
+    [dogwoodTree printDescription];
     
     [dogwoodTree setSpecies:@"some new species"];
     [dogwoodTree setAge:48];
+    [dogwoodTree printDescription];
+}
+
+- (void)sixthExample // Blocks
+{
+    Tree *dogwoodTree = [[Tree alloc] initWithSpecies:@"Dogwood" age:35];
+
+    [dogwoodTree descriptionWithBlock:^(NSString *description) {
+        NSLog(@"%@", description);
+    }];
+}
+
+- (void)seventhExample // Protocols and delegates
+{
+    
 }
 
 @end

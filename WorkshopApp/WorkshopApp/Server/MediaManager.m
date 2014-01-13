@@ -7,7 +7,6 @@
 //
 
 #import "MediaManager.h"
-#import "NSError+Extensions.h"
 #import "MediaObject.h"
 
 static NSString *const InstagramEndpoint = @"https://api.instagram.com/v1/media/popular?client_id=5609d2fb2bf74d749716bd00a9090e5e";

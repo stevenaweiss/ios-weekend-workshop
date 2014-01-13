@@ -8,10 +8,15 @@
 
 #import "Tree.h"
 
+// Private interface
+
+@interface Tree ()
+
+@end
+
 @implementation Tree
 
-- (id)initWithSpecies:(NSString *)species
-                  age:(int)age
+- (id)initWithSpecies:(NSString *)species age:(int)age
 {
     self = [super init];
     if (self) {
@@ -21,9 +26,18 @@
     return self;
 }
 
-- (void)printInfo
+- (void)printDescription
 {
     NSLog(@"This %@ tree is %i years old.", self.species, self.age);
+}
+
+- (void)descriptionWithBlock:(void(^)(NSString *description))block
+{
+    NSString *description = [NSString stringWithFormat:@"This %@ tree is %i years old.", self.species, self.age];
+    
+    if (block) {
+        block(description);
+    }
 }
 
 @end
