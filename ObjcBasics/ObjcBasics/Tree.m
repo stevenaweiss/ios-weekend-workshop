@@ -40,4 +40,14 @@
     }
 }
 
+- (void)doSomething
+{
+    if (self.delegate) {
+
+        NSString *description = [NSString stringWithFormat:@"This %@ tree is %i years old.", self.species, self.age];
+
+        [self.delegate tree:self description:description];
+    }
+}
+
 @end

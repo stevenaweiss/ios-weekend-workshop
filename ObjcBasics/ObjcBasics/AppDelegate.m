@@ -9,6 +9,10 @@
 #import "AppDelegate.h"
 #import "Tree.h"
 
+@interface AppDelegate () <TreeDelegate>
+
+@end
+
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -28,16 +32,22 @@
 
 - (void)runExamples
 {
-    [self firstExample];
-    [self secondExample];
-    [self thirdExample];
-    [self fourthExample];
-    [self fifthExample];
-    [self sixthExample];
-    [self seventhExample];
+    [self variablesExample];
+    
+    [self conditionalExample];
+    
+    [self loopExample];
+    
+    [self dictionaryExample];
+    
+    [self classExample];
+    
+    [self blockExample];
+    
+    [self delegateExample];
 }
 
-- (void)firstExample // Datatypes, variables, logging
+- (void)variablesExample // Datatypes, variables, logging
 {
     NSString *name = @"Alfie";
     int age = 34;
@@ -46,7 +56,7 @@
     NSLog(@"My name is %@. I am %i years old. I am %.2f feet tall.", name, age, height);
 }
 
-- (void)secondExample // Conditionals, sending messages
+- (void)conditionalExample // Conditionals, sending messages
 {
     NSString *name = @"Alfie";
     BOOL hasPrettyLongName = NO;
@@ -60,7 +70,7 @@
     NSLog(@"Is my name pretty long? %i (%i characters)", hasPrettyLongName, [name length]);
 }
 
-- (void)thirdExample // For loops, arrays
+- (void)loopExample // For loops, arrays
 {
     NSArray *numbers = @[@10, @20, @25, @100];
     
@@ -76,7 +86,7 @@
     NSLog(@"average = %.2f", average);
 }
 
-- (void)fourthExample // Dictionaries
+- (void)dictionaryExample // Dictionaries
 {
     NSDictionary *myInfo = @{@"name" : @"Alfie",
                              @"age" : @34,
@@ -93,7 +103,7 @@
     NSLog(@"Height: %.2f", [[myInfo valueForKey:@"height"] floatValue]);
 }
 
-- (void)fifthExample // Classes, instances, properties
+- (void)classExample // Classes, instances, properties
 {
     Tree *dogwoodTree = [[Tree alloc] initWithSpecies:@"Dogwood" age:35];
     Tree *japaneseMapleTree = [[Tree alloc] initWithSpecies:@"Japanese Maple" age:41];
@@ -111,7 +121,7 @@
     [dogwoodTree printDescription];
 }
 
-- (void)sixthExample // Blocks
+- (void)blockExample // Blocks
 {
     Tree *dogwoodTree = [[Tree alloc] initWithSpecies:@"Dogwood" age:35];
 
@@ -120,9 +130,17 @@
     }];
 }
 
-- (void)seventhExample // Protocols and delegates
+- (void)delegateExample // Protocols and delegates
 {
-    
+    Tree *dogwoodTree = [[Tree alloc] initWithSpecies:@"Dogwood" age:35];
+    dogwoodTree.delegate = self;
+}
+
+#pragma mark - Tree Delegate
+
+- (void)tree:(Tree *)tree description:(NSString *)description
+{
+    NSLog(@"%@", description);
 }
 
 @end
