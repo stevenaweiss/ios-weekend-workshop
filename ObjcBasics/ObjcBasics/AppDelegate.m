@@ -123,17 +123,18 @@
 
 - (void)blockExample // Blocks
 {
-    Tree *dogwoodTree = [[Tree alloc] initWithSpecies:@"Dogwood" age:35];
+    Tree *redwoodTree = [[Tree alloc] initWithSpecies:@"Redwood" age:50];
 
-    [dogwoodTree descriptionWithBlock:^(NSString *description) {
+    [redwoodTree descriptionWithBlock:^(NSString *description) {
         NSLog(@"%@", description);
     }];
 }
 
 - (void)delegateExample // Protocols and delegates
 {
-    Tree *dogwoodTree = [[Tree alloc] initWithSpecies:@"Dogwood" age:35];
-    dogwoodTree.delegate = self;
+    Tree *pineTree = [[Tree alloc] initWithSpecies:@"Pine" age:5];
+    pineTree.delegate = self;
+    [pineTree doSomething];
 }
 
 #pragma mark - Tree Delegate
