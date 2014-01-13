@@ -7,7 +7,6 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ImageViewController">
             <connections>
                 <outlet property="activityIndicatorView" destination="led-7b-89u" id="d4z-As-vdT"/>
-                <outlet property="captionLabel" destination="lXw-01-QG0" id="a0D-Qr-V9v"/>
                 <outlet property="imageView" destination="XDZ-jQ-I7o" id="Bmn-FC-4Ah"/>
                 <outlet property="view" destination="9o8-rF-u78" id="HLL-dP-Ixy"/>
             </connections>
@@ -33,29 +32,15 @@
                         <constraint firstAttribute="height" constant="300" id="caq-8c-GAi"/>
                     </constraints>
                 </imageView>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" misplaced="YES" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="300" translatesAutoresizingMaskIntoConstraints="NO" id="lXw-01-QG0">
-                    <rect key="frame" x="10" y="318" width="300" height="240"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="300" id="yAY-rE-HgF"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="XDZ-jQ-I7o" secondAttribute="trailing" constant="10" id="B8L-J8-oRs"/>
-                <constraint firstItem="lXw-01-QG0" firstAttribute="leading" secondItem="9o8-rF-u78" secondAttribute="leading" constant="10" id="Fdb-Mj-y7G"/>
                 <constraint firstAttribute="trailing" secondItem="led-7b-89u" secondAttribute="trailing" constant="150" id="J4z-sQ-3Tf"/>
                 <constraint firstItem="XDZ-jQ-I7o" firstAttribute="top" secondItem="9o8-rF-u78" secondAttribute="top" constant="10" id="Qwu-w1-kaN"/>
-                <constraint firstAttribute="trailing" secondItem="lXw-01-QG0" secondAttribute="trailing" constant="10" id="SfH-Sc-gY0"/>
                 <constraint firstItem="led-7b-89u" firstAttribute="leading" secondItem="9o8-rF-u78" secondAttribute="leading" constant="150" id="XmN-fv-IOk"/>
                 <constraint firstItem="XDZ-jQ-I7o" firstAttribute="leading" secondItem="9o8-rF-u78" secondAttribute="leading" constant="10" id="Xwb-pF-NdG"/>
-                <constraint firstItem="lXw-01-QG0" firstAttribute="top" secondItem="XDZ-jQ-I7o" secondAttribute="bottom" constant="8" id="Zmb-NX-YdK"/>
                 <constraint firstItem="led-7b-89u" firstAttribute="top" secondItem="9o8-rF-u78" secondAttribute="top" constant="150" id="kEc-1t-j40"/>
-                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="lXw-01-QG0" secondAttribute="bottom" constant="10" id="ooA-l4-FJP"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
         </view>

@@ -12,7 +12,6 @@
 @interface ImageViewController ()
 
 @property (nonatomic, strong) IBOutlet UIImageView *imageView;
-@property (nonatomic, strong) IBOutlet UILabel *captionLabel;
 @property (nonatomic, strong) IBOutlet UIActivityIndicatorView *activityIndicatorView;
 
 @end
@@ -43,16 +42,9 @@
     self.edgesForExtendedLayout = UIRectEdgeNone;
     
     [self setupImageView];
-    [self setupCaption];
 }
 
 #pragma mark - Setup
-
-- (void)setupCaption
-{
-    self.captionLabel.text = self.mediaObject.caption;
-    [self.captionLabel sizeToFit];
-}
 
 - (void)setupImageView
 {
