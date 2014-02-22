@@ -19,7 +19,8 @@
 - (id)initWithSpecies:(NSString *)species age:(int)age
 {
     self = [super init];
-    if (self) {
+    if (self)
+    {
         self.species = species;
         self.age = age;
     }
@@ -35,15 +36,16 @@
 {
     NSString *description = [NSString stringWithFormat:@"This %@ tree is %i years old.", self.species, self.age];
     
-    if (block) {
+    if (block)
+    {
         block(description);
     }
 }
 
 - (void)doSomething
 {
-    if (self.delegate) {
-
+    if (self.delegate)
+    {
         NSString *description = [NSString stringWithFormat:@"This %@ tree is %i years old.", self.species, self.age];
 
         [self.delegate tree:self description:description];

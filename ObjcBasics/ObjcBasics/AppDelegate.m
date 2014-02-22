@@ -23,6 +23,10 @@
     
     [self runExamples];
     
+    // Do this to void warning wrt applications expected to have rootViewController at launch
+    UIViewController *viewController = [[UIViewController alloc] init];
+    [self.window setRootViewController:viewController];
+    
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     return YES;
@@ -61,9 +65,12 @@
     NSString *name = @"Alfie";
     BOOL hasPrettyLongName = NO;
     
-    if ([name length] > 10) {
+    if ([name length] > 10)
+    {
         hasPrettyLongName = YES;
-    } else {
+    }
+    else
+    {
         hasPrettyLongName = NO;
     }
     
@@ -76,7 +83,8 @@
     
     float sum = 0.0f;
     
-    for (int i = 0; i < [numbers count]; i++) {
+    for (int i = 0; i < [numbers count]; i++)
+    {
         NSNumber *number = numbers[i];
         sum = sum + [number intValue];
     }
@@ -126,7 +134,9 @@
     Tree *redwoodTree = [[Tree alloc] initWithSpecies:@"Redwood" age:50];
 
     [redwoodTree descriptionWithBlock:^(NSString *description) {
+       
         NSLog(@"%@", description);
+    
     }];
 }
 
