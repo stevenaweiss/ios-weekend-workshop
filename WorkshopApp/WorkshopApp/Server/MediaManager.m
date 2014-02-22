@@ -19,7 +19,8 @@ static NSString *const InstagramEndpoint = @"https://api.instagram.com/v1/media/
 - (id)init
 {
     self = [super init];
-    if (self) {
+    if (self)
+    {
         self.mediaObjects = [NSArray array];
     }
     return self;
@@ -40,20 +41,21 @@ static NSString *const InstagramEndpoint = @"https://api.instagram.com/v1/media/
         // Check for a valid HTTP response status code
         
         NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-        if (httpResponse.statusCode == 200) {
-
+        if (httpResponse.statusCode == 200)
+        {
             // Then parse the data object into JSON
             
             NSError *JSONParseError = nil;
             NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data
                                                                        options:NSJSONReadingAllowFragments
                                                                          error:&JSONParseError];
-            if (JSONParseError){
+            if (JSONParseError)
+            {
                 self.mediaObjects = [NSArray array];
                 completionBlock(NO);
-                
-            } else {
-                
+            }
+            else
+            {
                 // And convert the JSON into a sorted array of MediaObjects
                 
                 NSArray *media = [weakSelf mediaObjectsFromResponse:dictionary];
@@ -61,7 +63,9 @@ static NSString *const InstagramEndpoint = @"https://api.instagram.com/v1/media/
                 completionBlock(YES);
             }
             
-        } else {
+        }
+        else
+        {
             self.mediaObjects = [NSArray array];
             completionBlock(NO);
         }
@@ -79,8 +83,10 @@ static NSString *const InstagramEndpoint = @"https://api.instagram.com/v1/media/
     NSMutableArray * mediaObjects = [NSMutableArray array];
     
     NSArray *data = [response valueForKey:@"data"];
-    if ([MediaManager isValidElement:data]) {
-        for (NSDictionary *mediaDictionary in data) {
+    if ([MediaManager isValidElement:data])
+    {
+        for (NSDictionary *mediaDictionary in data)
+        {
             MediaObject *mediaObject = [[MediaObject alloc] initWithDictionary:mediaDictionary];
             [mediaObjects addObject:mediaObject];
         }
@@ -104,9 +110,12 @@ static NSString *const InstagramEndpoint = @"https://api.instagram.com/v1/media/
 {
     // Check that the JSON element exists (is not nil) and is not null
     
-    if (element && (NSNull *)element != [NSNull null]) {
+    if (element && (NSNull *)element != [NSNull null])
+    {
         return YES;
-    } else {
+    }
+    else
+    {
         return NO;
     }
 }

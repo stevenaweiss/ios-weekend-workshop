@@ -23,7 +23,8 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
+    if (self)
+    {
         // Custom initialization
     }
     return self;
@@ -58,10 +59,12 @@
 
             [weakSelf enableRefreshButton:YES];
 
-            if (success) {
+            if (success)
+            {
                 [weakSelf.tableView reloadData];
-            
-            } else {
+            }
+            else
+            {
                 UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Uh Oh!"
                                                                  message:@"An error occurred"
                                                                 delegate:nil
@@ -94,7 +97,8 @@
     static NSString *cellIdentifier = @"Cell";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    if (!cell) {
+    if (!cell)
+    {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
     
