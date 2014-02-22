@@ -28,7 +28,7 @@
     return YES;
 }
 
-#pragma mark - Exercises
+#pragma mark - Examples
 
 - (void)runExamples
 {
@@ -112,11 +112,11 @@
     [japaneseMapleTree printDescription];
     NSLog(@"Species: %@, Age: %i", dogwoodTree.species, dogwoodTree.age);
     
-    dogwoodTree.species = @"some new species";
+    dogwoodTree.species = @"Catwood Tree";
     dogwoodTree.age = 48;
     [dogwoodTree printDescription];
     
-    [dogwoodTree setSpecies:@"some new species"];
+    [dogwoodTree setSpecies:@"Hamsterwood Tree"];
     [dogwoodTree setAge:48];
     [dogwoodTree printDescription];
 }

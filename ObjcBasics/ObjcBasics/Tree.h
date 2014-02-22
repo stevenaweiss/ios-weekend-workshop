@@ -8,9 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
-// Delegate protocol
+@class Tree; // Forward declaration of the Tree class
 
-@class Tree;
+// Delegate protocol
 
 @protocol TreeDelegate <NSObject>
 
