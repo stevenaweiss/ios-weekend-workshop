@@ -7,7 +7,6 @@
 //
 
 #import "MediaObject.h"
-#import "MediaManager.h"
 
 @implementation MediaObject
 
@@ -21,7 +20,6 @@
         // Falling back on default values if something's amiss
         
         self.username = [self parseUsername:dictionary];
-        self.caption = [self parseCaption:dictionary];
         self.imageURL = [self parseImageURL:dictionary];
     
     }
@@ -33,10 +31,10 @@
     NSString * username = @"-";
     
     NSDictionary *userDictionary = [dictionary valueForKey:@"user"];
-    if ([MediaManager isValidElement:userDictionary])
+    if ([self isValidElement:userDictionary])
     {
         NSString * tempUsername = [userDictionary valueForKey:@"username"];
-        if ([MediaManager isValidElement:tempUsername])
+        if ([self isValidElement:tempUsername])
         {
             username = tempUsername;
         }
@@ -45,35 +43,18 @@
     return username;
 }
 
-- (NSString *)parseCaption:(NSDictionary *)dictionary
-{
-    NSString * caption = @"-";
-    
-    NSDictionary *captionDictionary = [dictionary valueForKey:@"caption"];
-    if ([MediaManager isValidElement:captionDictionary])
-    {
-        NSString * tempCaption = [captionDictionary valueForKey:@"text"];
-        if ([MediaManager isValidElement:tempCaption])
-        {
-            caption = tempCaption;
-        }
-    }
-    
-    return caption;
-}
-
 - (NSURL *)parseImageURL:(NSDictionary *)dictionary
 {
     NSString *URLString = @"";
     
     NSDictionary *images = [dictionary valueForKey:@"images"];
-    if ([MediaManager isValidElement:images])
+    if ([self isValidElement:images])
     {
         NSDictionary * imageDictionary = [images valueForKey:@"standard_resolution"];
-        if ([MediaManager isValidElement:imageDictionary])
+        if ([self isValidElement:imageDictionary])
         {
             NSString *tempURLString = [imageDictionary valueForKey:@"url"];
-            if ([MediaManager isValidElement:tempURLString])
+            if ([self isValidElement:tempURLString])
             {
                 URLString = tempURLString;
             }
@@ -81,6 +62,20 @@
     }
     
     return [NSURL URLWithString:URLString];
+}
+
+- (BOOL)isValidElement:(id)element
+{
+    // Check that the JSON element exists (is not nil) and is not null
+    
+    if (element && (NSNull *)element != [NSNull null])
+    {
+        return YES;
+    }
+    else
+    {
+        return NO;
+    }
 }
 
 @end

@@ -14,6 +14,4 @@
 
 - (void)fetchPopularMediaWithCompletionBlock:(void (^)(BOOL success))completionBlock;
 
-+ (BOOL)isValidElement:(id)element;
-
 @end

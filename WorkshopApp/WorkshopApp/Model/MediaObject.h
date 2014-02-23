@@ -11,7 +11,6 @@
 @interface MediaObject : NSObject
 
 @property (nonatomic, strong) NSString *username;
-@property (nonatomic, strong) NSString *caption;
 @property (nonatomic, strong) NSURL *imageURL;
 
 - (id)initWithDictionary:(NSDictionary *)dictionary;
