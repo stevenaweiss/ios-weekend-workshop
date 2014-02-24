@@ -28,54 +28,16 @@
 
 - (NSString *)parseUsername:(NSDictionary *)dictionary
 {
-    NSString * username = @"-";
-    
-    NSDictionary *userDictionary = [dictionary valueForKey:@"user"];
-    if ([self isValidElement:userDictionary])
-    {
-        NSString * tempUsername = [userDictionary valueForKey:@"username"];
-        if ([self isValidElement:tempUsername])
-        {
-            username = tempUsername;
-        }
-    }
+    NSString * username = [dictionary valueForKeyPath:@"user.username"];;
     
     return username;
 }
 
 - (NSURL *)parseImageURL:(NSDictionary *)dictionary
 {
-    NSString *URLString = @"";
-    
-    NSDictionary *images = [dictionary valueForKey:@"images"];
-    if ([self isValidElement:images])
-    {
-        NSDictionary * imageDictionary = [images valueForKey:@"standard_resolution"];
-        if ([self isValidElement:imageDictionary])
-        {
-            NSString *tempURLString = [imageDictionary valueForKey:@"url"];
-            if ([self isValidElement:tempURLString])
-            {
-                URLString = tempURLString;
-            }
-        }
-    }
+    NSString *URLString = [dictionary valueForKeyPath:@"images.standard_resolution.url"];
     
     return [NSURL URLWithString:URLString];
-}
-
-- (BOOL)isValidElement:(id)element
-{
-    // Check that the JSON element exists (is not nil) and is not null
-    
-    if (element && (NSNull *)element != [NSNull null])
-    {
-        return YES;
-    }
-    else
-    {
-        return NO;
-    }
 }
 
 @end

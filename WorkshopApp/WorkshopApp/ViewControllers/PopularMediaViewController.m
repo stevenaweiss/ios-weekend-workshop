@@ -36,8 +36,6 @@
 {
     [super viewDidLoad];
     
-	// Do any additional setup after loading the view.
-    
     self.title = @"Media";
     
     self.mediaManager = [[MediaManager alloc] init];

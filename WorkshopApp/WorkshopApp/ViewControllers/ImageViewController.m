@@ -34,9 +34,6 @@
 {
     [super viewDidLoad];
     
-    // Harsh, but for the sake of simplicity we're quitting if mediaObject == nil at this point
-    NSAssert(self.mediaObject != nil, @"self.mediaObject cannot be nil");
-    
     self.title = self.mediaObject.username;
     
     // Ensure that our UI elements begin just after the navigationBar rather than beneath it
@@ -51,18 +48,19 @@
 {
     [self.activityIndicatorView startAnimating];
     
-    // Use an NSURLSessionDownloadTask to asynchronously fetch the image
-    
     __weak ImageViewController * weakSelf = self;
     NSURLSession *session = [NSURLSession sharedSession];
     NSURLSessionDownloadTask *getImageTask = [session downloadTaskWithURL:self.mediaObject.imageURL completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error) {
         
-        UIImage *downloadedImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:location]];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [weakSelf.activityIndicatorView stopAnimating];
-            weakSelf.imageView.image = downloadedImage;
-        });
-        
+        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+        if (httpResponse.statusCode == 200)
+        {
+            UIImage *downloadedImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:location]];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [weakSelf.activityIndicatorView stopAnimating];
+                weakSelf.imageView.image = downloadedImage;
+            });
+        }
     }];
     [getImageTask resume];
 }

@@ -27,6 +27,7 @@
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="XDZ-jQ-I7o">
                     <rect key="frame" x="10" y="10" width="300" height="300"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    <color key="backgroundColor" red="1" green="0.52394920109999998" blue="0.79582487999999996" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="300" id="Wkr-2i-CIg"/>
                         <constraint firstAttribute="height" constant="300" id="caq-8c-GAi"/>

@@ -14,17 +14,12 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    
-    // Override point for customization after application launch.
-    
-    // Create an instance of PopularMediaViewController
+        
     PopularMediaViewController *viewController = [[PopularMediaViewController alloc] initWithNibName:@"PopularMediaViewController" bundle:nil];
     
-    // Create a UINavigationController so we have forward/backward navigation capability    
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
     [self.window setRootViewController:navigationController];
     
-    self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     return YES;
 }

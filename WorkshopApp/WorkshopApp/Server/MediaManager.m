@@ -29,21 +29,18 @@
 - (void)fetchPopularMediaWithCompletionBlock:(void (^)(BOOL success))completionBlock
 {
     // Use an NSURLSessionDataTask to download the popular media JSON
-    
-    __weak MediaManager * weakSelf = self;
-    
-    NSString *instagramEndpoint = @"https://api.instagram.com/v1/media/popular?client_id=5609d2fb2bf74d749716bd00a9090e5e";
+
+    NSString *clientID = @""; // Fill this in
+    NSString *instagramEndpoint = [NSString stringWithFormat:@"https://api.instagram.com/v1/media/popular?client_id=%@", clientID];
     NSURL *URL = [NSURL URLWithString:instagramEndpoint];
+
+    __weak MediaManager * weakSelf = self;
     NSURLSession *session = [NSURLSession sharedSession];
     NSURLSessionDataTask *task = [session dataTaskWithURL:URL completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-
-        // Check for a valid HTTP response status code
         
         NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
         if (httpResponse.statusCode == 200)
         {
-            // Then parse the data object into JSON
-            
             NSError *JSONParseError = nil;
             NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data
                                                                        options:NSJSONReadingAllowFragments
@@ -54,19 +51,15 @@
             }
             else
             {
-                // And convert the JSON into a sorted array of MediaObjects
-                
                 weakSelf.mediaObjects = [weakSelf mediaObjectsFromResponse:dictionary];
                 weakSelf.mediaObjects = [weakSelf sortMediaObjects];
                 completionBlock(YES);
             }
-            
         }
         else
         {
             completionBlock(NO);
         }
-        
     }];
     [task resume];
 }
