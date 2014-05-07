@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#import "Tree.h"
+#import "Cat.h"
 
 @interface AppDelegate () <TreeDelegate>
 
@@ -23,12 +23,13 @@
     
     [self runExamples];
     
-    // Do this to void warning wrt applications expected to have rootViewController at launch
+    // Do this to void warning about applications expected to have rootViewController at launch
     UIViewController *viewController = [[UIViewController alloc] init];
     [self.window setRootViewController:viewController];
     
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
+    
     return YES;
 }
 
@@ -69,12 +70,8 @@
     {
         hasPrettyLongName = YES;
     }
-    else
-    {
-        hasPrettyLongName = NO;
-    }
     
-    NSLog(@"Is my name pretty long? %i (%i characters)", hasPrettyLongName, [name length]);
+    NSLog(@"Is my name pretty long? %i (%lu characters)", hasPrettyLongName, (unsigned long)[name length]);
 }
 
 - (void)loopExample // For loops, arrays
@@ -106,52 +103,25 @@
     NSArray *values = [myInfo allValues];
     NSLog(@"values: %@", values);
 
-    NSLog(@"Name: %@", [myInfo valueForKey:@"name"]);
-    NSLog(@"Age: %i", [[myInfo valueForKey:@"age"] intValue]);
-    NSLog(@"Height: %.2f", [[myInfo valueForKey:@"height"] floatValue]);
+    NSLog(@"Name: %@", myInfo[@"name"]);
+    NSLog(@"Age: %i", [myInfo[@"age"] intValue]);
+    NSLog(@"Height: %.2f", [myInfo[@"height"] floatValue]);
 }
 
 - (void)classExample // Classes, instances, properties
 {
-    Tree *dogwoodTree = [[Tree alloc] initWithSpecies:@"Dogwood" age:35];
-    Tree *japaneseMapleTree = [[Tree alloc] initWithSpecies:@"Japanese Maple" age:41];
+    Cat *scrumptious = [[Cat alloc] initWithName:@"Scrumptious"];
+    Cat *meatball = [[Cat alloc] initWithName:@"Meatball"];
     
-    [dogwoodTree printDescription];
-    [japaneseMapleTree printDescription];
-    NSLog(@"Species: %@, Age: %i", dogwoodTree.species, dogwoodTree.age);
+    [scrumptious makeSomeNoise];
+    [meatball makeSomeNoise];
     
-    dogwoodTree.species = @"Catwood Tree";
-    dogwoodTree.age = 48;
-    [dogwoodTree printDescription];
+    NSLog(@"Cat names: %@ and %@", scrumptious.name, meatball.name);
+
+    scrumptious.name = @"Fluffy";
+    meatball.name = @"Dustmop";
     
-    [dogwoodTree setSpecies:@"Hamsterwood Tree"];
-    [dogwoodTree setAge:48];
-    [dogwoodTree printDescription];
-}
-
-- (void)blockExample // Blocks
-{
-    Tree *redwoodTree = [[Tree alloc] initWithSpecies:@"Redwood" age:50];
-
-    [redwoodTree descriptionWithBlock:^(NSString *description) {
-       
-        NSLog(@"%@", description);
-    
-    }];
-}
-
-- (void)delegateExample // Protocols and delegates
-{
-    Tree *pineTree = [[Tree alloc] initWithSpecies:@"Pine" age:5];
-    pineTree.delegate = self;
-    [pineTree doSomething];
-}
-
-#pragma mark - Tree Delegate
-
-- (void)tree:(Tree *)tree description:(NSString *)description
-{
-    NSLog(@"%@", description);
+    NSLog(@"Cat names: %@ and %@", scrumptious.name, meatball.name);
 }
 
 @end
