@@ -30,7 +30,7 @@
 {
     // Use an NSURLSessionDataTask to download the popular media JSON
 
-    NSString *clientID = @""; // FILL THIS IN
+    NSString *clientID = @"5609d2fb2bf74d749716bd00a9090e5e"; // FILL THIS IN
     NSString *instagramEndpoint = [NSString stringWithFormat:@"https://api.instagram.com/v1/media/popular?client_id=%@", clientID];
     NSURL *URL = [NSURL URLWithString:instagramEndpoint];
 
