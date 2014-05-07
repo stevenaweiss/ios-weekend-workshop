@@ -9,7 +9,7 @@
 #import "AppDelegate.h"
 #import "Cat.h"
 
-@interface AppDelegate () <TreeDelegate>
+@interface AppDelegate ()
 
 @end
 
@@ -45,11 +45,7 @@
     
     [self dictionaryExample];
     
-    [self classExample];
-    
-    [self blockExample];
-    
-    [self delegateExample];
+    [self classExample];    
 }
 
 - (void)variablesExample // Datatypes, variables, logging
