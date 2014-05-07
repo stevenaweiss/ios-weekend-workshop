@@ -45,7 +45,7 @@
     
     [self dictionaryExample];
     
-    [self classExample];    
+    [self classExample];
 }
 
 - (void)variablesExample // Datatypes, variables, logging

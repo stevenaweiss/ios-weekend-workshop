@@ -10,9 +10,9 @@
 
 struct Tree
 {
-    int age;
-    float height;
-}; // Height and diameters expressed in meters, age in years
+    int age; // years
+    float height; // meters
+};
 
 int main(int argc, const char * argv[])
 {
