@@ -18,9 +18,10 @@
     PopularMediaViewController *viewController = [[PopularMediaViewController alloc] initWithNibName:@"PopularMediaViewController" bundle:nil];
     
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
-    [self.window setRootViewController:navigationController];
     
+    [self.window setRootViewController:navigationController];
     [self.window makeKeyAndVisible];
+    
     return YES;
 }
 

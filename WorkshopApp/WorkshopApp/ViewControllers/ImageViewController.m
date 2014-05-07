@@ -11,14 +11,14 @@
 
 @interface ImageViewController ()
 
-@property (nonatomic, strong) IBOutlet UIImageView *imageView;
-@property (nonatomic, strong) IBOutlet UIActivityIndicatorView *activityIndicatorView;
+@property (nonatomic, weak) IBOutlet UIImageView *imageView;
+@property (nonatomic, weak) IBOutlet UIActivityIndicatorView *activityIndicatorView;
 
 @end
 
 @implementation ImageViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self)
@@ -48,7 +48,6 @@
 {
     [self.activityIndicatorView startAnimating];
     
-    __weak ImageViewController * weakSelf = self;
     NSURLSession *session = [NSURLSession sharedSession];
     NSURLSessionDownloadTask *getImageTask = [session downloadTaskWithURL:self.mediaObject.imageURL completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error) {
         
@@ -56,9 +55,10 @@
         if (httpResponse.statusCode == 200)
         {
             UIImage *downloadedImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:location]];
+            
             dispatch_async(dispatch_get_main_queue(), ^{
-                [weakSelf.activityIndicatorView stopAnimating];
-                weakSelf.imageView.image = downloadedImage;
+                [self.activityIndicatorView stopAnimating];
+                self.imageView.image = downloadedImage;
             });
         }
     }];

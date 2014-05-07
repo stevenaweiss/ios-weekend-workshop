@@ -13,6 +13,6 @@
 @property (nonatomic, strong) NSString *username;
 @property (nonatomic, strong) NSURL *imageURL;
 
-- (id)initWithDictionary:(NSDictionary *)dictionary;
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 
 @end

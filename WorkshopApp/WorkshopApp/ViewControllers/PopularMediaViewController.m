@@ -13,14 +13,14 @@
 
 @interface PopularMediaViewController () <UITableViewDataSource, UITableViewDelegate>
 
-@property (nonatomic, strong) IBOutlet UITableView *tableView;
+@property (nonatomic, weak) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) MediaManager *mediaManager;
 
 @end
 
 @implementation PopularMediaViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self)
@@ -50,16 +50,15 @@
 
 - (void)updateContent
 {
-    __weak PopularMediaViewController *weakSelf = self;
     [self.mediaManager fetchPopularMediaWithCompletionBlock:^(BOOL success) {
 
         dispatch_sync(dispatch_get_main_queue(), ^{
 
-            [weakSelf enableRefreshButton:YES];
+            self.navigationItem.rightBarButtonItem.enabled = YES;
 
             if (success)
             {
-                [weakSelf.tableView reloadData];
+                [self.tableView reloadData];
             }
             else
             {
@@ -79,13 +78,8 @@
 
 - (void)didTapRefresh:(UIBarButtonItem *)sender
 {
-    [self enableRefreshButton:NO];
+    self.navigationItem.rightBarButtonItem.enabled = NO;
     [self updateContent];
-}
-
-- (void)enableRefreshButton:(BOOL)shouldEnable
-{
-    self.navigationItem.rightBarButtonItem.enabled = shouldEnable;
 }
 
 #pragma mark - UITableView Datasource

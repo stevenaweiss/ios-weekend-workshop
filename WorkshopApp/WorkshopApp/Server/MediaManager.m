@@ -14,12 +14,12 @@
 
 @implementation MediaManager
 
-- (id)init
+- (instancetype)init
 {
     self = [super init];
     if (self)
     {
-        self.mediaObjects = [NSArray array];
+        _mediaObjects = [NSArray array];
     }
     return self;
 }
@@ -30,35 +30,26 @@
 {
     // Use an NSURLSessionDataTask to download the popular media JSON
 
-    NSString *clientID = @""; // Fill this in
+    NSString *clientID = @""; // FILL THIS IN
     NSString *instagramEndpoint = [NSString stringWithFormat:@"https://api.instagram.com/v1/media/popular?client_id=%@", clientID];
     NSURL *URL = [NSURL URLWithString:instagramEndpoint];
 
-    __weak MediaManager * weakSelf = self;
     NSURLSession *session = [NSURLSession sharedSession];
     NSURLSessionDataTask *task = [session dataTaskWithURL:URL completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        
+
+        NSError *JSONParseError = nil;
+        NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&JSONParseError];
+
         NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-        if (httpResponse.statusCode == 200)
+        if (error || JSONParseError || httpResponse.statusCode != 200 || dictionary == nil)
         {
-            NSError *JSONParseError = nil;
-            NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data
-                                                                       options:NSJSONReadingAllowFragments
-                                                                         error:&JSONParseError];
-            if (JSONParseError)
-            {
-                completionBlock(NO);
-            }
-            else
-            {
-                weakSelf.mediaObjects = [weakSelf mediaObjectsFromResponse:dictionary];
-                weakSelf.mediaObjects = [weakSelf sortMediaObjects];
-                completionBlock(YES);
-            }
+            completionBlock(NO);
         }
         else
         {
-            completionBlock(NO);
+            self.mediaObjects = [self mediaObjectsFromResponse:dictionary];
+            self.mediaObjects = [self sortMediaObjects];
+            completionBlock(YES);
         }
     }];
     [task resume];
@@ -66,26 +57,26 @@
 
 #pragma mark - Utilities
 
+// Convert dictionaries into instances of the MediaObject class
+
 - (NSArray *)mediaObjectsFromResponse:(NSDictionary *)response
 {
-    // Convert dictionaries into instances of the MediaObject class
-
     NSMutableArray * mediaObjects = [NSMutableArray array];
     
-    NSArray *data = [response valueForKey:@"data"];
-    for (NSDictionary *mediaDictionary in data)
+    NSArray *data = response[@"data"];
+    for (NSDictionary *dictionary in data)
     {
-        MediaObject *mediaObject = [[MediaObject alloc] initWithDictionary:mediaDictionary];
+        MediaObject *mediaObject = [[MediaObject alloc] initWithDictionary:dictionary];
         [mediaObjects addObject:mediaObject];
     }
     
     return mediaObjects;
 }
 
+// Sort mediaObjects alphabetically by username
+
 - (NSArray *)sortMediaObjects
 {
-    // Sort mediaObjects alphabetically by username
-    
     NSSortDescriptor * descriptor = [[NSSortDescriptor alloc] initWithKey:@"username" ascending:YES];
     NSArray * descriptors = @[descriptor];
     NSArray * sortedArray = [self.mediaObjects sortedArrayUsingDescriptors:descriptors];
